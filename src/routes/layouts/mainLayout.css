@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+body {
+  /* background: red; */
+}
+
+.menuIcon {
+  @apply w-[42px] h-[42px] flex items-center justify-center;
+}
+
+.menuIcon:hover {
+  @apply bg-[#f1f1f1];
+}
+
+.logo{
+  @apply w-[24px] h-[24px] 
+}
+
+
+
+.gallaryItem:hover .overlay {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.gallaryItem:hover .overlayIcons {
+  display: flex;
+}
+
+.gallaryItem:hover .saveButton {
+  display: block;
+}
+
+
+
