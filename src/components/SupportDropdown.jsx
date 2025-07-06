@@ -10,20 +10,26 @@ const SupportDropdown = ({ isMobile = false, onBack }) => {
         className="text-sm text-blue-600 mb-4 flex items-center gap-2"
       >
         <div className="flex gap-2 items-center">
-          <ArrowLeft className="text-[18px]" />
-          <h1>Back</h1>
+          <ArrowLeft className="w-3 h-3 mt-1" />
+          <p>Back</p>
         </div>
       </button>
       <ul className="flex flex-col gap-3">
-        {supportData.map((item, i) => (
-          <li
-            key={i}
-            className="cursor-pointer hover:bg-gray-100 p-2 rounded flex justify-between"
-          >
-            <span>{item}</span>
-            {/* <span>→</span> */}
-            <ArrowRight className="text-[18px]" />
-          </li>
+        {megaMenuData.map((section, index) => (
+          <div key={index}>
+            <div className="flex items-center justify-between">
+              <h3 className="">{section.title}</h3>
+              <ArrowRight className="w-4 h-4 text-gray-700 ml-2" />
+            </div>
+
+            <ul className="space-y-2">
+              {section.items.map((item, i) => (
+                <li key={i} className="hover:underline cursor-pointer">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </ul>
     </div>

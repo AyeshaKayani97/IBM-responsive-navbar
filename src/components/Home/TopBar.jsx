@@ -1,6 +1,6 @@
 import React from "react";
 import UserButton from "../UserButton";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProductsDropdown from "../ProductsDropdown";
 import AIDropdown from "../AIDropdown";
 import HybridCloudDropdown from "../HybridCloudDropdown";
@@ -17,10 +17,21 @@ const TopBar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSubMenu, setMobileSubMenu] = useState(null);
+  const dropdownRef = useRef(null);
 
   const toggleMenu = (menuName) => {
     setActiveMenu(activeMenu === menuName ? null : menuName);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveMenu(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
     <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50">
       <div className="w-full flex items-center justify-between px-4 py-2">
@@ -59,7 +70,7 @@ const TopBar = () => {
                 {hasDropdown ? (
                   <button
                     onClick={() => toggleMenu(label)}
-                    className="flex items-center gap-1 focus:outline-none whitespace-nowrap"
+                    className="flex cursor-pointer items-center gap-1 focus:outline-none whitespace-nowrap"
                   >
                     {label} <span>▾</span>
                   </button>
@@ -72,13 +83,13 @@ const TopBar = () => {
         </div>
 
         {/* Right side: Icons */}
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-between">
           {[Search, MessageSquare, Globe, User].map((Icon, i) => (
             <div
               key={i}
               className="rounded-full p-2 hover:bg-gray-200 cursor-pointer"
             >
-              <Icon className="w-5 h-5 text-gray-700" />
+              <Icon className="w-4 h-4 text-gray-700" />
             </div>
           ))}
         </div>
@@ -86,9 +97,9 @@ const TopBar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden px-4 pb-4">
+        <div className="lg:hidden px-4 pb-4 w-full h-screen mt-3">
           {mobileSubMenu === null && (
-            <ul className="flex flex-col gap-3">
+            <ul className="w-full h-full flex flex-col gap-3">
               {[
                 { label: "AI", hasDropdown: true },
                 { label: "Hybrid Cloud", hasDropdown: true },
@@ -104,9 +115,9 @@ const TopBar = () => {
                   {hasDropdown ? (
                     <button
                       onClick={() => setMobileSubMenu(label)}
-                      className="w-full flex items-center justify-between focus:outline-none"
+                      className="w-full cursor-pointer flex items-center justify-between focus:outline-none"
                     >
-                      <span>{label}</span>
+                      <span className="cursor-pointer">{label}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   ) : (
@@ -136,16 +147,18 @@ const TopBar = () => {
       )}
 
       {/* Dropdowns */}
-      {activeMenu === "AI" && <AIDropdown mobileSubMenu={mobileSubMenu} />}
-      {activeMenu === "Hybrid Cloud" && (
-        <HybridCloudDropdown mobileSubMenu={mobileSubMenu} />
-      )}
-      {activeMenu === "Products" && (
-        <ProductsDropdown mobileSubMenu={mobileSubMenu} />
-      )}
-      {activeMenu === "Support" && (
-        <SupportDropdown mobileSubMenu={mobileSubMenu} />
-      )}
+      <div ref={dropdownRef}>
+        {activeMenu === "AI" && <AIDropdown mobileSubMenu={mobileSubMenu} />}
+        {activeMenu === "Hybrid Cloud" && (
+          <HybridCloudDropdown mobileSubMenu={mobileSubMenu} />
+        )}
+        {activeMenu === "Products" && (
+          <ProductsDropdown mobileSubMenu={mobileSubMenu} />
+        )}
+        {activeMenu === "Support" && (
+          <SupportDropdown mobileSubMenu={mobileSubMenu} />
+        )}
+      </div>
     </nav>
   );
 };

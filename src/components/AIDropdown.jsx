@@ -10,7 +10,7 @@ const AIDropdown = ({ isMobile = false, onBack }) => {
         className="text-sm text-blue-600 mb-4 flex items-center gap-2"
       >
         <div className="flex gap-2 items-center">
-          <ArrowLeft className="text-[18px]" />
+          <ArrowLeft className="w-4 h-4 mt-2" />
           <h1>Back</h1>
         </div>
       </button>
