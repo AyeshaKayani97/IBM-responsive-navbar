@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-body {
-  /* background: red; */
-}
-
 .menuIcon {
   @apply w-[42px] h-[42px] flex items-center justify-center;
 }
@@ -12,15 +8,16 @@ body {
   @apply bg-[#f1f1f1];
 }
 
-.logo{
-  @apply w-[24px] h-[24px] 
+.logo {
+  @apply w-[24px] h-[24px];
 }
-.overlay{
-   @apply w-[24px] h-[24px]
+.overlay {
+  @apply w-[24px] h-[24px];
 }
-.overlay:hover .saveButton{
-  @apply block
+.overlay:hover .saveButton {
+  @apply block;
 }
-.overlay:hover .downloadButton{
-  @apply block
+.overlay:hover .downloadButton {
+  @apply block;
 }
+

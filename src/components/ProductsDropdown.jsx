@@ -5,7 +5,8 @@ import { ArrowLeft } from "lucide-react";
 
 const ProductsDropdown = ({ isMobile = false, onBack }) => {
   const categories = Object.keys(productsData);
-  // const [activeCategory, setActiveCategory] = useState("Featured");
+  const [activeCategoryForDesktop, setActiveCategoryForDesktop] =
+    useState("Featured");
   const [activeCategory, setActiveCategory] = useState(null);
   return isMobile ? (
     <div className="px-4 pb-4">
@@ -60,9 +61,11 @@ const ProductsDropdown = ({ isMobile = false, onBack }) => {
             {categories.map((category, index) => (
               <li
                 key={index}
-                onClick={() => setActiveCategory(category)}
+                 onClick={() => setActiveCategoryForDesktop(category)}
                 className={`cursor-pointer px-3 py-2 rounded hover:bg-gray-200 ${
-                  activeCategory === category ? "bg-gray-100 font-bold" : ""
+                  activeCategoryForDesktop === category
+                    ? "bg-gray-100 font-bold"
+                    : ""
                 }`}
               >
                 {category}
@@ -76,12 +79,12 @@ const ProductsDropdown = ({ isMobile = false, onBack }) => {
           {/* Category Heading */}
           <div className="flex mb-4">
             <h2 className="text-lg font-semibold text-gray-700">
-              {activeCategory}
+              {activeCategoryForDesktop}
             </h2>
           </div>
 
           <div className="grid grid-cols-3 gap-6">
-            {productsData[activeCategory]?.map((item, index) => (
+            {productsData[activeCategoryForDesktop]?.map((item, index) => (
               <div key={index}>
                 <h4 className="font-bold">{item.name}</h4>
                 <p className="text-sm text-gray-600">{item.description}</p>
